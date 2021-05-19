@@ -25,4 +25,4 @@ class Base_requests:
     # 封装基本get方法
     def get(self, url=None, headers=None, data=None):
         response = requests.get(url=url, headers=headers, data=data)
-        return response.json()
+        return response

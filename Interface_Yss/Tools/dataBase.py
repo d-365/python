@@ -3,29 +3,35 @@
 # @Author : dujun
 # @describe : 数据库封装
 # @File : dataBase.py
+
 import pymysql
 import pytest
 
 
-class TestDataBase:
+class DataBase:
     def __init__(self):
-        ##测试环境
+        # 测试环境
         host = '192.168.18.203'
-        port = '3307'
+        port = 3307
         user = 'root'
         password = 'testtest '
-        self.conn = pymysql.connect(host=host, port=port, user=user, password=password)
+        database = 'user'
+        self.conn = pymysql.connect(host=host, port=port, user=user, password=password,database=database)
         self.cursor = self.conn.cursor()
 
-    ##select
-    def test_select(self, sql=''):
+    # select
+    def select(self):
         try:
-            self.cursor.execute(sql)
+            sql1 = "SELECT * FROM `us_user_users` WHERE   ShenFenZH  LIKE '%haitun_';"
+            self.cursor.execute(sql1)
             self.conn.commit()
+            sql1_value = self.cursor.fetchmany(2)
+            print(sql1_value[0])
+
         except BaseException:
             self.conn.rollback()
 
 
 if __name__ == '__main__':
-    run = TestDataBase()
-    run.test_select("SELECT * from  be_exam_stuvideo  where  baoKaoId ='2628541' ")
+    run = DataBase()
+    run.select()
